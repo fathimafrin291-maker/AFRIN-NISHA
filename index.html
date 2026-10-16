@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AFRIN NISHA A | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Syne:wght@800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FDFBF7;
+            --primary: #008080; /* Teal */
+            --accent: #FFD700; /* Warm Yellow */
+            --ink: #1A1A1A;
+            --border-width: 2px;
+            --stamp-red: #C43D3D;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--ink);
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* --- World: Boarding Pass & Rubber Stamps --- */
+
+        .paper-texture {
+            position: fixed;
+            inset: 0;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3C%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- Opening Animation --- */
+        #intro-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .reveal-circle {
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: circleReveal 1.8s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+        }
+
+        @keyframes circleReveal {
+            0% { transform: scale(1); opacity: 1; }
+            40% { transform: scale(100); opacity: 1; }
+            100% { transform: scale(200); opacity: 0; visibility: hidden; }
+        }
+
+        #skip-btn {
+            position: absolute;
+            bottom: 2rem;
+            background: none;
+            border: 1px solid var(--ink);
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.7rem;
+        }
+
+        /* --- Layout --- */
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            padding: 5rem 0;
+            border-bottom: 1px dashed #CCC;
+        }
+
+        /* --- Landing --- */
+        .hero {
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .monogram {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(4rem, 15vw, 10rem);
+            line-height: 0.8;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: inline-block;
+            border: 4px solid var(--primary);
+            padding: 1rem;
+            transform: rotate(-2deg);
+        }
+
+        .huge-name {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .tagline {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            max-width: 600px;
+            font-weight: 300;
+            margin: 1.5rem 0;
+        }
+
+        .currently {
+            display: inline-block;
+            background: var(--accent);
+            padding: 0.2rem 0.6rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .ticket-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: var(--border-width) solid var(--ink);
+            background: transparent;
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            position: relative;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .ticket-btn::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--bg);
+            border: var(--border-width) solid var(--ink);
+            border-radius: 50%;
+        }
+
+        .ticket-btn:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 4px 4px 0 var(--ink);
+        }
+
+        /* --- Cards & Signature Move --- */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border: var(--border-width) solid var(--ink);
+            padding: 2rem;
+            position: relative;
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+        }
+
+        .card:hover {
+            transform: rotateX(5deg) rotateY(-5deg);
+        }
+
+        /* --- Rubber Stamp Signature --- */
+        .stamp {
+            display: inline-block;
+            border: 3px double var(--stamp-red);
+            color: var(--stamp-red);
+            font-family: 'Syne', sans-serif;
+            padding: 0.5rem 1rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            transform: rotate(-12deg);
+            opacity: 0.8;
+            margin: 2rem 0;
+            user-select: none;
+            pointer-events: none;
+            mix-blend-mode: multiply;
+        }
+
+        /* --- Content Styling --- */
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 3rem;
+        }
+
+        .about-text {
+            font-size: 1.25rem;
+            max-width: 800px;
+            columns: 1;
+        }
+        @media (min-width: 768px) {
+            .about-text { columns: 2; gap: 4rem; }
+        }
+
+        .skill-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-label {
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+        }
+
+        .journey-log {
+            border-left: 2px solid var(--ink);
+            padding-left: 2rem;
+            margin-left: 1rem;
+        }
+
+        .log-entry {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .log-entry::before {
+            content: '';
+            position: absolute;
+            left: calc(-2rem - 6px);
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--ink);
+            border-radius: 50%;
+        }
+
+        .footer {
+            padding: 5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .contact-link {
+            display: block;
+            font-size: 1.5rem;
+            color: var(--ink);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .contact-link:hover {
+            color: var(--primary);
+        }
+
+        .easter-egg {
+            font-size: 0.7rem;
+            opacity: 0.2;
+            cursor: help;
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding-top: 4rem; }
+            .huge-name { line-height: 1.1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="paper-texture"></div>
+
+<div id="intro-overlay">
+    <div class="reveal-circle"></div>
+    <button id="skip-btn" onclick="document.getElementById('intro-overlay').style.display='none'">Skip</button>
+</div>
+
+<main class="container">
+    <section class="hero">
+        <div class="monogram">AN</div>
+        <h1 class="huge-name">AFRIN NISHA A</h1>
+        <p class="tagline">Designing logic and crafting digital paths as a B.Tech IT student.</p>
+        <span class="currently">BOARDING NOW: Year 01 @ IT Department</span>
+        
+        <div class="btn-group">
+            <a href="#about" class="ticket-btn">Explore</a>
+            <a href="#contact" class="ticket-btn">Say Hi</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>The Passenger</h2>
+        <div class="about-text">
+            <p>I didn't just stumble into IT; I followed the trail of how things connect. Currently a first-year student navigating the world of B.Tech Information Technology, I find myself at the intersection of rigid logic and fluid design.</p>
+            <p>I treat every project like a new destination. My approach isn't about following a template—it's about understanding the itinerary of a problem and finding the most efficient, human route to solve it. I'm building a toolkit that combines technical precision with a designer's eye.</p>
+        </div>
+        <div class="stamp">Afrin Nisha Checked</div>
+    </section>
+
+    <section id="skills">
+        <h2>Cargo & Tools</h2>
+        <div class="card-grid">
+            <div class="card">
+                <div class="skill-label">Comfortable</div>
+                <h3>HTML5 & CSS3</h3>
+                <p>Building the structural foundation of the web with semantic clarity.</p>
+            </div>
+            <div class="card">
+                <div class="skill-label">Learning</div>
+                <h3>Python & C</h3>
+                <p>Exploring the fundamentals of programming logic and algorithmic thinking.</p>
+            </div>
+            <div class="card">
+                <div class="skill-label">Comfortable</div>
+                <h3>UI Layouts</h3>
+                <p>Crafting responsive designs that respect the user's journey and device.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="journey">
+        <h2>Flight Log</h2>
+        <div class="journey-log">
+            <div class="log-entry">
+                <div class="skill-label">Destination 01</div>
+                <h3>Foundations</h3>
+                <p>Mastering the core pillars of IT and understanding how data travels across the globe.</p>
+            </div>
+            <div class="log-entry">
+                <div class="skill-label">En Route</div>
+                <h3>Personal Portfolio</h3>
+                <p>Developing this site using CSS-only visuals to prove that constraints breed creativity.</p>
+            </div>
+            <div class="log-entry">
+                <div class="skill-label">Future Arrival</div>
+                <h3>Full Stack & AI</h3>
+                <p>Aiming to build systems that aren't just functional, but meaningful to the people using them.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="beyond">
+        <h2>Personal Effects</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3>Curiosity</h3>
+                <p>I spend my time exploring new tech trends and dissecting how my favorite apps actually work.</p>
+            </div>
+            <div class="card">
+                <h3>Fun Fact</h3>
+                <p>I believe a well-placed rubber stamp is better than a thousand digital signatures.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="footer">
+        <div>
+            <h2>Arrival</h2>
+            <a href="mailto:hello@afrinnisha.com" class="contact-link">Email</a>
+            <a href="#" class="contact-link">LinkedIn</a>
+            <a href="#" class="contact-link">GitHub</a>
+        </div>
+        <div class="stamp" style="transform: rotate(5deg); border-color: var(--primary); color: var(--primary);">Verified IT 2026</div>
+        <div class="easter-egg" onclick="alert('You found the hidden stamp! 🎫')">.</div>
+    </footer>
+</main>
+
+<script>
+    // Handle opening animation removal
+    setTimeout(() => {
+        const overlay = document.getElementById('intro-overlay');
+        if (overlay) overlay.style.display = 'none';
+    }, 2500);
+
+    // Signature Move: Tilt cards toward finger
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+        });
+    });
+</script>
+
+</body>
+</html>
